@@ -6,7 +6,7 @@
 
 截图
 ![](/static/img/screenshot.png)
-![](/static/img/screenshot1.png)
+![](/static/img/screenshota.png)
 
 todo
 - 趋势展示
