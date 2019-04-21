@@ -1,0 +1,86 @@
+{%extends "index.html"%}
+{%block title%}Job-info{%endblock%}
+{%block head%}
+{{ super() }}
+<script src="https://www.chartjs.org/dist/2.8.0/Chart.min.js"></script>
+<script src="https://www.chartjs.org/samples/latest/utils.js"></script>
+{%endblock%}
+{%block content%}
+
+<div id='card'></div>
+<ul class="pagination">
+  <li class="page-item">
+    <button class="btn btn-outline-primary" id='pa1' aria-label="Previous">
+    &laquo;
+    </button>
+  </li>
+  <li class="page-item">
+    <button id='pa2' class="btn btn-outline-primary">2
+    </button></li>
+  <li class="page-item">
+    <button class="btn btn-outline-primary" id='pa3' aria-label="Next">
+    &raquo;
+    </button>
+  </li>
+</ul>
+<script>
+  var page=1
+  function myFunction(){
+      console.log(page)
+  function myFunc(data) {
+    var res=''
+    //console.log(data)
+    if (data.length==0)
+    {
+      res='no data'
+    }
+    else{
+        for (i in data){
+        res=res+`
+        <div class="card">
+        <div class="card-header bg-primary">
+        <strong> ${data[i].name} </strong>
+        <span class="badge badge-secondary"> 
+        <h6 class="card-title mb-0"> ${data[i].selery} </h6>
+        </span>
+        <span class="badge badge-warning"> 
+        <h6 class="card-title mb-0"> ${data[i].city} </h6>
+        </span>
+        <span class="badge badge-warning"> 
+        <h6 class="card-title mb-0"> ${data[i].date} </h6>
+        </span>
+        </div>
+        <div class="card-body">
+        <p class="card-text"> ${data[i].msg} . </p>
+        </div>
+        </div>
+        <br>`
+      }}
+      $("#card").html(res);
+      $('#pa2').html(page);
+}
+$.get(`http://127.0.0.1:5000/api/job/${page}`,myFunc);
+};
+
+
+function np(){
+    page=page+1;
+    document.getElementById("card").innerHTML='ajax请求中...'
+    myFunction();
+  }
+function pp(){
+  if (page==1){
+    page=1;
+  }
+  else{
+    page=page-1;
+    document.getElementById("card").innerHTML='ajax请求中...'
+    myFunction();
+  }
+}
+document.getElementById("pa1").onclick=function (){pp()};
+document.getElementById("pa3").onclick=function (){np()};
+
+window.onload= myFunction;
+</script>
+{%endblock%}
